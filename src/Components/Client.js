@@ -1,11 +1,12 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import Picture from "../Components/Picture"
 
 class Client extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {"id":0, "title":"","author":"","price":0}
+        this.state = {"id":null, "title":"","author":"","price":0, items: []}
     }
 
     componentDidMount() {
@@ -67,12 +68,23 @@ class Client extends Component {
                             <th>Title</th>
                             <th>Author</th>
                             <th>Price</th>
+                            <th>Select</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.items.map( (b, index) => { return <tr key={index}><td>{b.id}</td><td>{b.title}</td><td>{b.author}</td><td>{b.price}</td></tr> })}
+                        {this.state.items.map( (b, index) => { 
+                            return <tr key={index}>
+                            <td>{b.id}</td>
+                            <td>{b.title}</td>
+                            <td>{b.author}</td>
+                            <td>{b.price}</td>
+                            <td><b><button type='button' class='btn btn-dark btn-sm' onClick={ (event) => { this.setState({id: b.id}) } }>+</button></b></td>
+                            </tr> })}
                     </tbody>
                 </table>
+                }
+                {this.state.id &&
+                    <Picture id={this.state.id} />
                 }
             </div>
         );
