@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 
 class Client extends Component {
@@ -8,7 +9,8 @@ class Client extends Component {
     }
 
     componentDidMount() {
-        this.getDataByFetch();
+        //this.getDataByFetch();
+        this.getDataByAxios();
     }
 
     getDataByFetch = () => {
@@ -19,7 +21,9 @@ class Client extends Component {
     }
 
     getDataByAxios = () => {
-
+        axios.get(this.props.url)
+        .then( response => { this.setState( {items: [...response.data]}, () => {console.log(this.state);} ) } ) 
+        .catch( (err) => { console.log(err) })
     }
 
     render() {
@@ -28,7 +32,7 @@ class Client extends Component {
                 <h3>Books</h3>
                 <hr/>
                 { this.state.items && 
-                <table>
+                <table className='table table-striped'>
                     <thead>
                         <tr>
                             <th>Id</th>
