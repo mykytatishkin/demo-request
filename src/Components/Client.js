@@ -26,11 +26,39 @@ class Client extends Component {
         .catch( (err) => { console.log(err) })
     }
 
+    addBook = () => {
+        const toSend = { id: 0, title: this.state.title, author: this.state.author, price: this.state.price };
+        console.log(toSend);
+
+        /* Fetch API
+
+        const fetchOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json; charset=utf-8' },
+            body: JSON.stringify(toSend)
+        };
+
+        fetch(this.props.url, fetchOptions)
+        .then( (response) => { console.log(response) } )
+        .catch( (err) => { console.log(err) } )
+
+        */
+
+        // AXIOS
+        axios.post(this.props.url, toSend);
+    }
+
     render() {
         return (
             <div>
                 <h3>Books</h3>
                 <hr/>
+                <form>
+                    <input type='text' name='title' placeholder='Title' onChange={ (event) => { this.setState( { title: event.target.value } ) } }/>
+                    <input type='text' name='author' placeholder='Author' onChange={ (event) => { this.setState( { author: event.target.value } ) } }/>
+                    <input type='text' name='price' placeholder='Price' onChange={ (event) => { this.setState( { price: event.target.value } ) } }/>
+                    <button type='button' onClick={this.addBook}>Add Book</button>
+                </form>
                 { this.state.items && 
                 <table className='table table-striped'>
                     <thead>
